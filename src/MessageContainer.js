@@ -109,14 +109,14 @@ export default class MessageContainer extends React.Component {
       return this.props.renderMessage(messageProps);
     }
     return (
-      <View style={{ transform: [{ scaleY: -1 },{perspective: 1280}]}}>
+      <View>
         <Message {...messageProps}/>
       </View>
     )
   }
 
   renderHeaderWrapper = () => {
-    return <View style={{ flex: 1, transform: [{ scaleY: -1 },{perspective: 1280}] }}>{this.renderLoadEarlier()}</View>;
+    return <View style={styles.container}>{this.renderLoadEarlier()}</View>;
   };
 
   _keyExtractor = (item, index) => item._id+" "+index
@@ -134,6 +134,7 @@ export default class MessageContainer extends React.Component {
           pageSize={20}
           ref='flatListRef'
           keyExtractor={this._keyExtractor}
+          inverted={true}
           {...this.props.listViewProps}
 
           data={this.state.messagesData}
@@ -141,7 +142,6 @@ export default class MessageContainer extends React.Component {
           renderItem={this.renderRow}
           renderHeader={this.renderFooter}
           renderFooter={this.renderLoadEarlier()}
-          style={{transform: [{scaleY: -1 },{perspective: 1280}]}}
           {...this.props.invertibleScrollViewProps}
           ListFooterComponent={this.renderHeaderWrapper}
         />
