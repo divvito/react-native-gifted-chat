@@ -5,15 +5,18 @@ import {
   ViewPropTypes,
   StyleSheet,
 } from 'react-native';
+import shallowequal from 'shallowequal';
 
 import Avatar from './Avatar';
 import Bubble from './Bubble';
 import SystemMessage from './SystemMessage';
 import Day from './Day';
-
 import {isSameUser, isSameDay} from './utils';
 
 export default class Message extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return !shallowequal(this.props, nextProps);
+  }
 
   getInnerComponentProps() {
     const {containerStyle, ...props} = this.props;

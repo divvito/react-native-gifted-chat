@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import shallowequal from 'shallowequal';
-import md5 from 'md5';
 import LoadEarlier from './LoadEarlier';
 import Message from './Message';
 
@@ -21,20 +20,19 @@ export default class MessageContainer extends React.Component {
     this.renderLoadEarlier = this.renderLoadEarlier.bind(this);
     this.state = {
       messagesData: this.prepareMessages(props.messages)
-    }; 
+    };
   }
 
   prepareMessages(messages) {
-    return output = messages.reduce((o,m,i) => {
-      const previousMessage = messages[i + 1] || {}
-      const nextMessage = messages[i - 1] || {}
-      o.push( {
-        ...m,
+    return messages.map((currentMessage, i) => {
+      const previousMessage = messages[i + 1] || {};
+      const nextMessage = messages[i - 1] || {};
+      return {
+        currentMessage,
         previousMessage,
         nextMessage
-      })
-      return o
-    },[])
+      };
+    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -85,41 +83,38 @@ export default class MessageContainer extends React.Component {
     this.refs.flatListRef.scrollToOffset(options)
   }
 
-  renderRow({item,index}) {
-    if (!item._id && item._id !== 0) {
+  renderRow({item}) {
+    const {currentMessage, previousMessage, nextMessage} = item;
+    if (!currentMessage._id && currentMessage._id !== 0) {
       console.warn('GiftedChat: `_id` is missing for message', JSON.stringify(item));
     }
-    if (!item.user) {
-      if (!item.system) {
+    if (!currentMessage.user) {
+      if (!currentMessage.system) {
         console.warn("GiftedChat: `user` is missing for message", JSON.stringify(item));
       }
-      item.user = {};
+      currentMessage.user = {};
     }
 
     const messageProps = {
       ...this.props,
-      key: item._id,
-      currentMessage: item,
-      previousMessage: item.previousMessage,
-      nextMessage: item.nextMessage,
-      position: item.user._id === this.props.user._id ? 'right' : 'left',
+      key: currentMessage._id,
+      currentMessage,
+      previousMessage,
+      nextMessage,
+      position: currentMessage.user._id === this.props.user._id ? 'right' : 'left',
     };
 
     if (this.props.renderMessage) {
       return this.props.renderMessage(messageProps);
     }
-    return (
-      <View>
-        <Message {...messageProps}/>
-      </View>
-    )
+    return <Message {...messageProps}/>;
   }
 
   renderHeaderWrapper = () => {
     return <View style={styles.container}>{this.renderLoadEarlier()}</View>;
   };
 
-  _keyExtractor = (item, index) => item._id+" "+index
+  _keyExtractor = (item) => item.currentMessage._id;
 
   render() {
     return (
