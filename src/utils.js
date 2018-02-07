@@ -33,3 +33,25 @@ export function warnDeprecated(fn) {
   };
 
 }
+
+export function pick(obj, keys) {
+  const ret = {
+
+  };
+  keys.forEach((key) => {
+    if (obj.hasOwnProperty(key)) {
+      ret[key] = obj[key]
+    }
+  });
+  return ret;
+}
+
+export function omit(obj, keys) {
+  const ret = {
+    ...obj
+  };
+  keys.forEach((key) => {
+    delete ret[key];
+  });
+  return ret;
+}

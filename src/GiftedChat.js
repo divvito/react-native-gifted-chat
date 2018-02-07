@@ -303,12 +303,13 @@ class GiftedChat extends React.Component {
 
   renderMessages() {
     const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
+    const messageContainerProps = utils.omit(this.props, ['text']);
     return (
       <AnimatedView style={{
         height: this.state.messagesContainerHeight,
       }}>
         <MessageContainer
-          {...this.props}
+          {...messageContainerProps}
 
           invertibleScrollViewProps={this.invertibleScrollViewProps}
 

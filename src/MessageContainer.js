@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import * as utils from './utils';
 import shallowequal from 'shallowequal';
 import LoadEarlier from './LoadEarlier';
 import Message from './Message';
@@ -96,7 +97,7 @@ export default class MessageContainer extends React.Component {
     }
 
     const messageProps = {
-      ...this.props,
+      ...utils.omit(this.props, ['messages']), // omit messages to prevent re-render of all message components
       key: currentMessage._id,
       currentMessage,
       previousMessage,
