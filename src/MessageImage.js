@@ -6,7 +6,7 @@ import {
   View,
   ViewPropTypes,
 } from 'react-native';
-import Lightbox from 'react-native-lightbox';
+import Lightbox from 'react-native-lightbox-divvito';
 
 export default class MessageImage extends React.Component {
   render() {
