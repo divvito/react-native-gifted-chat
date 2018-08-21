@@ -341,7 +341,7 @@ class GiftedChat extends React.Component {
 
   renderKeyboardSpacer() {
     if (this.usingSpacer()) {
-      return <KeyboardSpacer/>;
+      return <KeyboardSpacer onToggle={this.toggleKeyboard}/>;
     }
 
     return null;
