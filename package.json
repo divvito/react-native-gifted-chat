@@ -41,6 +41,7 @@
     "moment": "^2.19.0",
     "prop-types": "15.5.10",
     "react-native-communications": "2.2.1",
+    "react-native-keyboard-spacer": "^0.4.1",
     "react-native-lightbox-divvito": "github:divvito/react-native-lightbox",
     "react-native-parsed-text": "^0.0.19",
     "shallowequal": "1.0.2",
