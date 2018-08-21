@@ -45,7 +45,8 @@ class GiftedChat extends React.Component {
     this.state = {
       isInitialized: false,
       composerHeight: MIN_COMPOSER_HEIGHT,
-      typingDisabled: false
+      typingDisabled: false,
+      keyboardOpen: false,
     };
 
     this.onSend = this.onSend.bind(this);
@@ -53,6 +54,7 @@ class GiftedChat extends React.Component {
     this.onInputSizeChanged = this.onInputSizeChanged.bind(this);
     this.onInputTextChanged = this.onInputTextChanged.bind(this);
     this.onInitialLayoutViewLayout = this.onInitialLayoutViewLayout.bind(this);
+    this.toggleKeyboard = this.toggleKeyboard.bind(this);
 
     this.invertibleScrollViewProps = {
       inverted: true,
@@ -175,15 +177,22 @@ class GiftedChat extends React.Component {
     });
   }
 
+  toggleKeyboard(keyboardOpen) {
+    this.setState({keyboardOpen});
+  }
+
   renderMessages() {
+    const AnimatedView = this.props.isAnimated ? Animated.View : View;
     const messageContainerProps = utils.omit(this.props, ['text']);
     return (
-      <View style={[
-        styles.container,
-        !this.usingSpacer() && {
-          marginBottom: this.calculateInputToolbarHeight()
-        }
-      ]}>
+      <AnimatedView
+        style={[
+          styles.container,
+          !this.state.keyboardOpen && {
+            marginBottom: this.calculateInputToolbarHeight(),
+          },
+        ]}
+      >
         <MessageContainer
           {...messageContainerProps}
 
@@ -194,7 +203,7 @@ class GiftedChat extends React.Component {
           ref={component => this._messageContainerRef = component}
         />
         {this.renderChatFooter()}
-      </View>
+      </AnimatedView>
     );
   }
 
@@ -332,7 +341,7 @@ class GiftedChat extends React.Component {
 
   renderKeyboardSpacer() {
     if (this.usingSpacer()) {
-      return <KeyboardSpacer topSpacing={this.calculateInputToolbarHeight()}/>;
+      return <KeyboardSpacer/>;
     }
 
     return null;
