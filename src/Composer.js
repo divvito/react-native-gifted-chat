@@ -39,7 +39,9 @@ export default class Composer extends React.Component {
 
         autoFocus={this.props.textInputAutoFocus}
 
-        value={this.props.text}
+        // Fix for android slowness - re-examine if this fix is needed when we can update RN Core next
+        // https://github.com/FaridSafi/react-native-gifted-chat/issues/926
+        value={Platform.os === 'ios' ? this.props.text : null}
         accessibilityLabel={this.props.text || this.props.placeholder}
         enablesReturnKeyAutomatically
         underlineColorAndroid="transparent"
