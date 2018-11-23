@@ -177,6 +177,15 @@ class GiftedChat extends React.Component {
     });
   }
 
+  scrollToIndex(index, animated = true, viewPosition = 0) {
+    if (this._messageContainerRef === null) {
+      return;
+    }
+    this._messageContainerRef.scrollToIndex({
+      index, animated, viewPosition,
+    });
+  }
+
   toggleKeyboard(keyboardOpen) {
     this.setState({keyboardOpen});
   }

@@ -84,6 +84,10 @@ export default class MessageContainer extends React.Component {
     this.refs.flatListRef.scrollToOffset(options)
   }
 
+  scrollToIndex(options) {
+    this.refs.flatListRef.scrollToIndex(options)
+  }
+
   renderRow({item}) {
     const {currentMessage, previousMessage, nextMessage} = item;
     if (!currentMessage._id && currentMessage._id !== 0) {
