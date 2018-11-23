@@ -81,11 +81,15 @@ export default class MessageContainer extends React.Component {
   }
 
   scrollTo(options) {
-    this.refs.flatListRef.scrollToOffset(options)
+    if (this.refs && this.refs.flatListRef) {
+      this.refs.flatListRef.scrollToOffset(options);
+    }
   }
 
   scrollToIndex(options) {
-    this.refs.flatListRef.scrollToIndex(options)
+    if (this.refs && this.refs.flatListRef) {
+      this.refs.flatListRef.scrollToIndex(options);
+    }
   }
 
   renderRow({item}) {
